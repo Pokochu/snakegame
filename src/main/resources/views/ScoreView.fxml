@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<AnchorPane fx:id="background"
+            prefHeight="600.0" prefWidth="600.0"
+            stylesheets="@../css/GeneralStyle.css"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.pogonyi.controller.ScoreViewController">
+    <children>
+        <Label fx:id="title" stylesheets="@../css/ScoreViewStyle.css" layoutX="89.0" layoutY="35.0" text="High Scores" AnchorPane.topAnchor="35.0" />
+        <TableView fx:id="table" prefHeight="400" prefWidth="400" layoutX="89.0" layoutY="95.0">
+            <columns>
+                <TableColumn fx:id="nameCol" text="Name"/>
+                <TableColumn fx:id="scoreCol" text="Score"/>
+            </columns>
+        </TableView>
+        <Button fx:id="backBtn" layoutX="147.0" layoutY="296.0" mnemonicParsing="false" onAction="#back" text="Back" AnchorPane.bottomAnchor="47.0" />
+    </children>
+</AnchorPane>

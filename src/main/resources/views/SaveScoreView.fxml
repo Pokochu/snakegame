@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="background"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="400.0"
+            stylesheets="@../css/GeneralStyle.css">
+
+    <VBox fx:id="everything" layoutX="-4.0" prefHeight="400.0" prefWidth="400.0" stylesheets="@../css/SettingsViewStlye.css">
+        <Label fx:id="yourScoreLabel" text="Save Your Score!!" />
+        <HBox fx:id="inputsAndLabels" prefHeight="100.0" prefWidth="200.0">
+            <VBox fx:id="labels" prefHeight="124.0" prefWidth="145.0">
+                <Label text="Name:"/>
+                <Label text="Score:"/>
+            </VBox>
+            <VBox fx:id="inputs" prefHeight="200.0" prefWidth="100.0">
+                <TextField fx:id="nameText" prefWidth="100" />
+                <Label fx:id="scoreText" prefWidth="100" />
+            </VBox>
+        </HBox>
+        <HBox fx:id="buttons" prefHeight="100.0" prefWidth="200.0">
+            <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#saveScore" text="Save Score" />
+            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#back" text="Back" />
+        </HBox>
+    </VBox>
+</AnchorPane>
