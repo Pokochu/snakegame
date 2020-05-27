@@ -60,7 +60,6 @@ public class SnakeApp extends Application {
         primaryStage.show();
     }
     private void setDefCont() {
-        LOGGER.info("set controls");
         preferences = Preferences.userRoot().node(SettingsViewController.class.getName());
 
         preferences.put(UP, UP);

@@ -38,6 +38,9 @@ public class GameScene extends Scene {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameScene.class);
 
+    public static final String SCREEN_RES_ERROR_MSG = "Max screen resolution can be: {}x{}, but {}:{} was set in the Settings.";
+    public static final String CANNOT_GO_BACK_TO_MAIN_ERROR_MSG = "views/WelcomeView.fxml file not found {}";
+
     private int width = 1000;
     private int height = 700;
 
@@ -60,7 +63,7 @@ public class GameScene extends Scene {
 
     private int score = 0;
     private int lives =5;
-    private int foodPoint = 100;
+    private int foodPoint = 10;
     private boolean inGame = false;
     private boolean paused = false;
     private boolean gameOver = false;
@@ -122,7 +125,7 @@ public class GameScene extends Scene {
     private void checkScreenBounds(int newWidth, int newHeight) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         if(newWidth > screenBounds.getWidth() || newHeight > screenBounds.getHeight()) {
-            LOGGER.error("Max screen resolution can be: {}x{}, but {}:{} was set in the Settings.", screenBounds.getWidth(),
+            LOGGER.error(SCREEN_RES_ERROR_MSG, screenBounds.getWidth(),
                     screenBounds.getHeight(), newWidth, newHeight);
             System.exit(0);
         }
@@ -187,33 +190,14 @@ public class GameScene extends Scene {
         Button backBtn = initButton("Back", width /2f + 30, height /2f + 50);
 
         exitBtn.setOnMouseClicked(e -> System.exit(0));
-        saveYourScoreBtn.setOnMouseClicked(event -> {
-            Stage stage = (Stage) saveYourScoreBtn.getScene().getWindow();
-            Parent root = null;
-            try {
-                SaveScoreViewController controller = new SaveScoreViewController();
-                controller.setScore(String.valueOf(score));
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().
-                        getResource("/views/SaveScoreView.fxml")));
-                loader.setController(controller);
-                root = loader.load();
-            } catch (IOException e1) {
-                LOGGER.error("views/WelcomeView.fxml file not found {}", e1.getMessage());
-                System.exit(0);
-            }
-            stage.setScene(new Scene(root));
-            stage.centerOnScreen();
-            stage.show();
-        });
-        restartBtn.setOnMouseClicked(e -> {
-            gameOver = false;
-            ((AnchorPane) getRoot()).getChildren().removeAll(gameOverLabel, scoreLabel, saveYourScoreBtn, restartBtn, exitBtn, backBtn);
+        setSaveScoreBtnFunctionality(saveYourScoreBtn);
+        setRestartBtnFunctionality(saveYourScoreBtn, restartBtn, exitBtn, backBtn);
+        setBackBtnFunctinality(backBtn);
 
-            frog.setRandomPosition(width, height);
-            addEventHandler(KeyEvent.KEY_PRESSED, keyHandler);
-            resetCounters();
-            initScreen();
-        });
+        ((AnchorPane) getRoot()).getChildren().addAll(gameOverLabel, scoreLabel, saveYourScoreBtn, restartBtn, exitBtn, backBtn);
+    }
+
+    private void setBackBtnFunctinality(Button backBtn) {
         backBtn.setOnMouseClicked(e -> {
             Stage stage = (Stage) getWindow();
             Parent root = null;
@@ -228,8 +212,39 @@ public class GameScene extends Scene {
             stage.centerOnScreen();
             stage.show();
         });
+    }
 
-        ((AnchorPane) getRoot()).getChildren().addAll(gameOverLabel, scoreLabel, saveYourScoreBtn, restartBtn, exitBtn, backBtn);
+    private void setRestartBtnFunctionality(Button saveYourScoreBtn, Button restartBtn, Button exitBtn, Button backBtn) {
+        restartBtn.setOnMouseClicked(e -> {
+            gameOver = false;
+            ((AnchorPane) getRoot()).getChildren().removeAll(gameOverLabel, scoreLabel, saveYourScoreBtn, restartBtn, exitBtn, backBtn);
+
+            frog.setRandomPosition(width, height);
+            addEventHandler(KeyEvent.KEY_PRESSED, keyHandler);
+            resetCounters();
+            initScreen();
+        });
+    }
+
+    private void setSaveScoreBtnFunctionality(Button saveYourScoreBtn) {
+        saveYourScoreBtn.setOnMouseClicked(event -> {
+            Stage stage = (Stage) saveYourScoreBtn.getScene().getWindow();
+            Parent root = null;
+            try {
+                SaveScoreViewController controller = new SaveScoreViewController();
+                controller.setScore(String.valueOf(score));
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().
+                        getResource("/views/SaveScoreView.fxml")));
+                loader.setController(controller);
+                root = loader.load();
+            } catch (IOException e1) {
+                LOGGER.error(CANNOT_GO_BACK_TO_MAIN_ERROR_MSG, e1.getMessage());
+                System.exit(0);
+            }
+            stage.setScene(new Scene(root));
+            stage.centerOnScreen();
+            stage.show();
+        });
     }
 
     private void resetCounters() {
