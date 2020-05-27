@@ -7,3 +7,6 @@ Features:
 - Save score if no lives left.
 - Display top ten scores at High Scores menu
 - Score data is stored in embedded H2 db, so no data is available at startup
+
+TODO:
+- HighScore's TableView style

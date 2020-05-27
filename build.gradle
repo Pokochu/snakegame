@@ -11,6 +11,15 @@ repositories {
     google()
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.pogonyi.SnakeApp'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 dependencies {
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
