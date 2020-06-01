@@ -14,7 +14,7 @@
             fx:controller="com.pogonyi.controller.ScoreViewController">
     <children>
         <Label fx:id="title" stylesheets="@../css/ScoreViewStyle.css" layoutX="89.0" layoutY="35.0" text="High Scores" AnchorPane.topAnchor="35.0" />
-        <TableView fx:id="table" prefHeight="400" prefWidth="400" layoutX="89.0" layoutY="95.0">
+        <TableView fx:id="table" stylesheets="@../css/ScoreViewStyle.css" prefHeight="400" prefWidth="400" layoutX="89.0" layoutY="95.0">
             <columns>
                 <TableColumn fx:id="nameCol" text="Name"/>
                 <TableColumn fx:id="scoreCol" text="Score"/>
